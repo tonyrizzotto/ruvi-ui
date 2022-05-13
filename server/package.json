@@ -1,5 +1,5 @@
 {
-  "name": "ruvi",
+  "name": "ruvi-server",
   "version": "0.1.0",
   "description": "The ruvi graphql server",
   "main": "index.js",
@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tony Rizzotto",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.7.0",
+    "graphql": "^16.5.0"
+  }
 }
