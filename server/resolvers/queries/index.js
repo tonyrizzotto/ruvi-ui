@@ -1,1 +1,1 @@
-exports.accounts = require('./accounts');
+exports.account = require('./account');

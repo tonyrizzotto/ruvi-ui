@@ -1,7 +1,7 @@
 const { createClient } = require('../../clients/accountservices-api');
 // const { accountServicesApi } = require('../../clients/accountservices-api');
 
-const accounts = async () => {
+const account = async () => {
   const accountServicesApi = await createClient();
 
   const response = await accountServicesApi.get('/accountservices/v1/accounts')
@@ -13,5 +13,5 @@ const accounts = async () => {
   return response;
 };
 
-module.exports = accounts;
+module.exports = account;
 
