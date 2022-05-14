@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
+import GraphTest from './GraphTest';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // send values to Login
 
     // Clear inputs
     setUsername('');
     setPassword('');
   }
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -36,6 +37,10 @@ export default function Login() {
       </form>
       <div>
         <p>Don&#39;t have an account? <a href='/accounts/create'>Click here</a> to create one!</p>
+      </div>
+      <div>
+        <h2>GraphQL Test</h2>
+        <GraphTest />
       </div>
     </>
   )

@@ -9,7 +9,7 @@ const server = new ApolloServer({
   csrfPrevention: true
 })
 
-server.listen().then(({ url }) => {
+server.listen({ port: 4008 }).then(({ url }) => {
   console.log(`Server is listening at ${url}`)
 });
 
