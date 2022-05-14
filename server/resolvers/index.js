@@ -1,20 +1,3 @@
-const mutations = require('./mutations');
+const Query = require('./queries')
 
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-];
-
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
-};
-
-module.exports = resolvers, mutations;
+module.exports = { Query };
