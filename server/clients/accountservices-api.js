@@ -12,7 +12,7 @@ const {
 module.exports.createClient = async () => {
     client = axios.create({
       baseURL: baseUrl,
-      timeout: timeout
+      timeout: timeout,
     });
 
   return {
@@ -25,8 +25,8 @@ module.exports.createClient = async () => {
     patch: async (url) => {
       return client.patch(url)
     },
-    post: async (url) => {
-      return client.post(url)
+    post: async (url, body) => {
+      return client.post(url, body)
     },
     put: async (url) => {
       return client.put(url)
