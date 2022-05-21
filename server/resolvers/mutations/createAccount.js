@@ -19,12 +19,7 @@ const createAccount = async (parent, args, context, info) => {
     password
   })
     .then((res) => res.status)
-    .catch(({ response }) => {
-      if (response.status === 400) {
-        // return the message to the front end to handle the error in the UI
-        return response.data.message
-      }
-    })
+    .catch(({ response: { data } }) => data.message)
 
   return res;
 };

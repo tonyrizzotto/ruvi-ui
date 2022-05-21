@@ -8,7 +8,6 @@ const {
   }
 } = manifest;
 
-// module.exports = { accountServicesApi }
 module.exports.createClient = async () => {
     client = axios.create({
       baseURL: baseUrl,

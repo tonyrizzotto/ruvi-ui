@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from "@apollo/client";
 import { CREATE_ACCOUNT } from "../constants/queries";
 
@@ -8,39 +9,72 @@ export default function CreateAccount() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isUpdatingEmail, setIsUpdatingEmail] = useState(false);
+  const [isUpdatedingUsername, setIsUpdatingUsername] = useState(false)
+  const [emailErrorMessage, setEmailErrorMessage] = useState('')
+  const [usernameErrorMessage, setUsernameErrorMessage] = useState('')
 
-  const [createAccount, { data }] = useMutation(CREATE_ACCOUNT);
+  const emailRef = useRef(null);
+  const usernameRef = useRef(null);
+
+  let navigate = useNavigate();
+
+  window.addEventListener('keydown', () => {
+    { isUpdatedingUsername && setIsUpdatingUsername(false) }
+    { isUpdatingEmail && setIsUpdatingEmail(false)}
+  })
+  const [createAccount] = useMutation(CREATE_ACCOUNT, {
+    onCompleted: (data) => {
+      if (data.createAccount === '201') {
+        // reset inputs
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setUsername('');
+        setPassword('');
+
+        navigate('../../', { replace: true })
+      }
+
+      if (data.createAccount === 'ACCOUNT_EMAIL_KEY') {
+        setIsUpdatingUsername(false);
+        setIsUpdatingEmail(true)
+        setEmailErrorMessage('Email already in use.')
+      }
+    
+      if (data.createAccount === 'ACCOUNT_USERNAME_KEY') {
+        setIsUpdatingEmail(false)
+        setIsUpdatingUsername(true);
+        setUsernameErrorMessage('Username is already taken.')
+      }
+    }
+  });
+
+
+  if (isUpdatingEmail) {
+    emailRef.current.focus();
+  }
+
+  if (isUpdatedingUsername) {
+    usernameRef.current.focus();
+  }
 
   const handleCreateAccount = async (e) => {
     e.preventDefault();
-
     createAccount({
       variables: {
         firstName: firstName,
         lastName: lastName,
         email: email,
         username: username,
-        password: password
-      }
+        password: encodeURIComponent(password)
+      },
+      fetchPolicy: 'no-cache'
     })
-
-    const res = data.createAccount;
-
-    if (res === '201') {
-      // handle this case in the UI
-      // reset inputs
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setUsername('');
-      setPassword('');
-
-    } 
-
-    if (res !== '201') {
-      // handle this case in the UI
-    }
   };
+
+  useEffect(() => {
+  }, [isUpdatingEmail, isUpdatedingUsername])
 
   return (
     <>
@@ -61,31 +95,52 @@ export default function CreateAccount() {
           onChange={(e) => setLastName(e.target.value)}
         />
         <br />
-        <label>Email: </label>
-        <input 
-          type="text" 
-          placeholder="email"
-          value={email}
-          onChange={(e) => {setEmail(e.target.value)}}
-        />
+        <span>
+          <label>Email: </label>
+          <input 
+            type="text" 
+            ref={emailRef}
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <i> {isUpdatingEmail && emailErrorMessage}</i>
+        </span>
         <br />
-        <label>Username: </label>
-        <input 
-          type="text"
-          placeholder="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        <span>
+          <label>Username: </label>
+          <input 
+            ref={usernameRef}
+            type="text"
+            placeholder="username"
+            autoComplete="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <i> {isUpdatedingUsername && usernameErrorMessage}</i>
+        </span>
+
         <br />
         <label>Password: </label>
         <input 
           type="password" 
-          placeholder="password" 
+          placeholder="password"
+          autoComplete="current-password" 
           value={password}
-          onChange={(e) => {setPassword(e.target.value)}}  
+          onChange={(e) => {setPassword(e.target.value)}}
         />
         <br />
-        <button type="submit">Create an account</button>
+        <button 
+          type="submit"
+          onSubmit={() => {
+            setEmailErrorMessage('')
+            setUsernameErrorMessage('')
+            setIsUpdatingEmail(false)
+            setIsUpdatingUsername(false)
+          }}
+        >
+          Create an account
+        </button>
       </form>
       <div>
         <p>Return <a href="/">back home</a></p>
