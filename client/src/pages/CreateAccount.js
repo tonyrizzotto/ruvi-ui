@@ -84,7 +84,7 @@ export default function CreateAccount() {
           type="text" 
           placeholder="first name" 
           value={firstName}
-          onChange={(e) => {setFirstName(e.target.value)}}  
+          onChange={(e) => setFirstName(e.target.value)}  
         />
         <br />
         <label>Last Name: </label>
@@ -127,7 +127,7 @@ export default function CreateAccount() {
           placeholder="password"
           autoComplete="current-password" 
           value={password}
-          onChange={(e) => {setPassword(e.target.value)}}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <br />
         <button 

@@ -1,23 +1,27 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
 
 function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('');
+  // const [message, setMessage] = useState('')
+
   return {
     isAuthenticated,
-    username,
-    login(username) {
+    email,
+    login(email) {
       return new Promise((resolve) => {
+
         setIsAuthenticated(true);
-        setUsername(username)
+        setEmail(email)
         resolve();
       })
     },
     logout() {
       return new Promise((resolve) => {
         setIsAuthenticated(false);
+        setEmail('');
         resolve();
       })
     }
