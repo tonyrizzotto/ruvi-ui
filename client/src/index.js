@@ -4,7 +4,7 @@ import {
   BrowserRouter,
 } from "react-router-dom"
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
-
+import { AuthProvider } from './authentication/useAuth'
 import App from './App'
 
 const client = new ApolloClient({
@@ -19,7 +19,9 @@ const root = ReactDOM.createRoot(container)
 root.render(
   <BrowserRouter>
     <ApolloProvider client={client}>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </ApolloProvider>
   </BrowserRouter>
 )
