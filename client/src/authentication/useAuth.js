@@ -9,11 +9,13 @@ function useAuth() {
   return {
     isAuthenticated,
     user,
-    login({ accountLogin }) {
+    // The login function should only recieve a token.
+    login({ accountLogin: { token } }) {
       return new Promise((resolve) => {
         setIsAuthenticated(true);
         // instead of setting the user on state, we should store data in local storage.
-        setUser(accountLogin)
+        console.log(token)
+        setUser()
         resolve();
       })
     },
