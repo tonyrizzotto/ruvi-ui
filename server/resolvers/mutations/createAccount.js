@@ -21,6 +21,7 @@ const createAccount = async (parent, args, context, info) => {
     .then((res) => res.status)
     .catch(({ response: { data } }) => data.message)
 
+  console.log(res);
   return res;
 };
 

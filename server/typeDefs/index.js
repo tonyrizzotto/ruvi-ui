@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server');
 const mutations = require('./mutations');
-// const queries = require('./queries')
+const queries = require('./queries')
 
 const customDefs = gql`
   scalar UUID
@@ -15,5 +15,6 @@ const customDefs = gql`
 `
 module.exports = [
   customDefs,
-  ...mutations
+  ...mutations,
+  ...queries
 ]

@@ -1,5 +1,5 @@
-const account = require('./account');
+const accountLogin = require('./accountLogin');
 
 module.exports = [
-  account
+  accountLogin
 ]
