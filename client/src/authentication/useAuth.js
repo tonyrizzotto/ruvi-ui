@@ -4,24 +4,22 @@ const AuthContext = createContext();
 
 function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [email, setEmail] = useState('');
-  // const [message, setMessage] = useState('')
+  const [user, setUser] = useState({});
 
   return {
     isAuthenticated,
-    email,
-    login(email) {
+    user,
+    login({ accountLogin }) {
       return new Promise((resolve) => {
-
         setIsAuthenticated(true);
-        setEmail(email)
+        setUser(accountLogin)
         resolve();
       })
     },
     logout() {
       return new Promise((resolve) => {
         setIsAuthenticated(false);
-        setEmail('');
+        setUser({});
         resolve();
       })
     }
@@ -31,7 +29,6 @@ function useAuth() {
 export function AuthProvider({ children }) {
   const auth = useAuth();
 
-  console.log(auth)
   return (
     <AuthContext.Provider value={auth}>
       {children}

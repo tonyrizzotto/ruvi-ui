@@ -1,25 +1,41 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLazyQuery } from '@apollo/client';
 import AuthConsumer from '../authentication/useAuth';
+import { ACCOUNT_LOGIN } from '../constants/queries';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const { login } = AuthConsumer()
+  const { login } = AuthConsumer();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const [accountLogin] = useLazyQuery(ACCOUNT_LOGIN, {
+    onCompleted: (data) => {
+      login(data).then(() => {
+        navigate('/dashboard')
+      })
+    }
+  })
+
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    login(email).then(() => {
-      navigate('/dashboard')
+    await accountLogin({
+      variables: {
+        email,
+        password: encodeURIComponent(password)
+      }
     })
+
+    // login(email).then(() => {
+    //   navigate('/dashboard')
+    // })
   }
   
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogin}>
         <label>Email: </label>
         <input 
           type="text"

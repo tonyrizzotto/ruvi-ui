@@ -5,8 +5,6 @@ export default async function (email, password) {
     username: 'adjustyourtone'
   }
 
-  console.log(email, password);
-
   if (email === user.email && password === user.password) {
     return { username: user.username}
   }

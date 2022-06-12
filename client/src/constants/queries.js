@@ -5,3 +5,17 @@ export const CREATE_ACCOUNT = gql`
     createAccount(firstName: $firstName, lastName: $lastName, email: $email, username: $username, password: $password)
   }
 `
+
+export const ACCOUNT_LOGIN = gql`
+  query RuviLogin($email: String!, $password: String!) {
+    accountLogin(email: $email, password: $password) {
+      account_uuid
+      first_name
+      last_name
+      email
+      username
+      tfa_enabled
+      deleted
+    }
+  }
+`
