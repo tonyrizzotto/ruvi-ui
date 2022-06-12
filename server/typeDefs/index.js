@@ -5,6 +5,8 @@ const queries = require('./queries')
 const customDefs = gql`
   scalar UUID
 
+  scalar JWT
+  
   type Query {
     about: String!
   }

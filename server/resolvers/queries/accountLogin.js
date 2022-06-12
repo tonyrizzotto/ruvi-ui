@@ -12,7 +12,10 @@ const accountLogin = async (parent, args, context, info) => {
       email,
       password
     })
-    .then(({ data }) => data)
+    .then(({ headers }) => {
+
+      return { token: headers['x-user-auth'] }
+    })
     .catch((err) => {
       throw new Error(err)
   })

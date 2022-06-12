@@ -1,5 +1,4 @@
 const { createClient } = require('../../clients/accountservices-api');
-// const { accountServicesApi } = require('../../clients/accountservices-api');
 
 const account = async () => {
   const accountServicesApi = await createClient();
