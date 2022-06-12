@@ -21,16 +21,12 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    await accountLogin({
+    accountLogin({
       variables: {
         email,
         password: encodeURIComponent(password)
       }
     })
-
-    // login(email).then(() => {
-    //   navigate('/dashboard')
-    // })
   }
   
   return (

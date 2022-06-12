@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 export default function App() {
   return (
     <Routes>
+      {/* need to dynamically render routes w/components */}
       <Route path="/" element={<Login />} />
       <Route path="/accounts/create" element={<CreateAccount />} />
       <Route path="/dashboard" element={<Dashboard />} />

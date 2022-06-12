@@ -12,6 +12,7 @@ function useAuth() {
     login({ accountLogin }) {
       return new Promise((resolve) => {
         setIsAuthenticated(true);
+        // instead of setting the user on state, we should store data in local storage.
         setUser(accountLogin)
         resolve();
       })
