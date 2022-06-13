@@ -9,6 +9,7 @@ export const CREATE_ACCOUNT = gql`
 export const ACCOUNT_LOGIN = gql`
   query RuviLogin($email: String!, $password: String!) {
     accountLogin(email: $email, password: $password) {
+      authorized
       token
     }
   }

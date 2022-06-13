@@ -12,6 +12,7 @@ module.exports = gql`
   # }
 
   type Authorization {
+    authorized: Boolean!
     token: JWT!
   }
 

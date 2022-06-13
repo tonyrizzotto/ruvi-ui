@@ -1,5 +1,8 @@
 const { createClient } = require('../../clients/accountservices-api');
+const jwt = require('jsonwebtoken');
+const manifest = require('../../manifest');
 
+const { auth: { signature }} = manifest;
 const accountLogin = async (parent, args, context, info) => {
   const accountServicesApi = await createClient();
 
@@ -12,9 +15,22 @@ const accountLogin = async (parent, args, context, info) => {
       email,
       password
     })
-    .then(({ headers }) => {
+    .then(({ headers }) => headers['x-user-auth'])
+    .then((token) => {
+      const validated = jwt.verify(token, signature, (err, decoded) => {
+        return decoded;
+      });
 
-      return { token: headers['x-user-auth'] }
+      let authorized;
+      if (validated === undefined) {
+        authorized = false;
+        return { authorized, token: '' };
+      }
+
+      // if validated is populated, the signature has been verified
+      authorized = true;
+
+      return { authorized, token };
     })
     .catch((err) => {
       throw new Error(err)

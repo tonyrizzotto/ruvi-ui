@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import jwt_decode from 'jwt-decode';
 
 const AuthContext = createContext();
 
@@ -10,18 +11,27 @@ function useAuth() {
     isAuthenticated,
     user,
     // The login function should only recieve a token.
-    login({ accountLogin: { token } }) {
+    login({ accountLogin: { authorized, token } }) {
       return new Promise((resolve) => {
-        setIsAuthenticated(true);
-        // instead of setting the user on state, we should store data in local storage.
-        console.log(token)
-        setUser()
+        setIsAuthenticated(authorized);
+        //  store token in local storage.
+        localStorage.setItem('access-token', token);
+
+        const { user } = jwt_decode(token);
+        localStorage.setItem('user', JSON.stringify(user));
+
+        setUser(user)
+
         resolve();
       })
     },
     logout() {
       return new Promise((resolve) => {
         setIsAuthenticated(false);
+        
+        localStorage.removeItem('access-token');
+        localStorage.removeItem('user');
+
         setUser({});
         resolve();
       })
