@@ -8,13 +8,17 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = AuthConsumer();
+
   const navigate = useNavigate();
 
   const [accountLogin, { loading }] = useLazyQuery(ACCOUNT_LOGIN, {
     onCompleted: (data) => {
-      login(data).then(() => {
-        navigate('/dashboard')
-      })
+      const { accountLogin: { authorized, token} } = data;
+
+      return login(authorized, token)
+        .then(() => {
+          navigate('/dashboard')
+        })
     }
   })
 
@@ -29,7 +33,6 @@ export default function Login() {
       fetchPolicy: 'no-cache'
     })
   }
-  
   return (
     <div>
       { !loading ? 

@@ -33,7 +33,7 @@ export default function CreateAccount() {
         setUsername('');
         setPassword('');
 
-        navigate('../../', { replace: true })
+        navigate('../login', { replace: true })
       }
 
       if (data.createAccount === 'ACCOUNT_EMAIL_KEY') {

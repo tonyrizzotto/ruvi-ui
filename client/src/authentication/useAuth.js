@@ -11,7 +11,7 @@ function useAuth() {
     isAuthenticated,
     user,
     // The login function should only recieve a token.
-    login({ accountLogin: { authorized, token } }) {
+    login(authorized, token) {
       return new Promise((resolve) => {
         setIsAuthenticated(authorized);
         //  store token in local storage.
@@ -28,7 +28,7 @@ function useAuth() {
     logout() {
       return new Promise((resolve) => {
         setIsAuthenticated(false);
-        
+
         localStorage.removeItem('access-token');
         localStorage.removeItem('user');
 
