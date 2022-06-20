@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import AuthConsumer from '../../authentication/useAuth';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -12,41 +14,63 @@ import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-import Apps from '@mui/icons-material/Apps';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ContactMail from '@mui/icons-material/ContactMail';
 import Home from '@mui/icons-material/Home';
+import LoginIcon from '@mui/icons-material/Login';
 import Menu from '@mui/icons-material/Menu';
 
 export default function MenuBar() {
   const [open, setOpen] = useState(false);
+  const { isAuthenticated, user, logout } = AuthConsumer();
+  const navigate = useNavigate();
 
   // Top List
   const topListItems = [
     {
       icon: <Home />,
-      text: 'Home'
+      text: 'Home',
+      route: '/',
+      showInAuth: true
     },
     {
-      icon: <Apps />,
-      text: 'Portfolio'
+      icon: <LoginIcon />,
+      text: isAuthenticated ? 'Logout' : 'Login',
+      route: isAuthenticated ? '/' : '/login'
     },
-    {
-      icon: <ContactMail />,
-      text: 'Resume'
-    }
   ];
+  
+  // Auth Protected Routes - only show when logged in
+  const authRoutes = [
+    {
+      icon: <Home />,
+      text: 'Dashboard',
+      route: '/dashboard'
+    },
+    {
+      icon: <AccountCircleIcon />,
+      text: 'Settings',
+      route: `/dashboard/${user.account_uuid}`
+    },
+  ]
 
   // Bottom List
   const bottomListItems = [
     {
-      icon: <Apps />,
-      text: 'Contact'
+      icon: <AccountCircleIcon />,
+      text: 'Create Account',
+      route: '/accounts/create',
+      showInAuth: false
     },
     {
       icon: <ContactMail />,
-      text: 'Get In Touch'
+      text: 'Get In Touch',
+      route: '/',
+      showInAuth: true
     }
   ]
+
+  // use to toggle the drawer open and close
   const toggleDrawer = () =>
     (event) => {
       if (
@@ -58,17 +82,30 @@ export default function MenuBar() {
       setOpen(!open)
     };
 
-  const list = (anchor) => (
+  // handle login/logout
+  const handleAccess = ({ text, route }) => {
+    if (text !== 'Logout') {
+      navigate(route, { state: user })
+    } else {
+      logout().then(() => {
+        navigate(route)
+      })
+    }
+  }
+
+  const list = () => (
     <Box
       sx={{ width: 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
     >
       <List>
         {topListItems.map((listItem, index) => (
           <ListItem key={index} disablePadding>
-            <ListItemButton>
+            <ListItemButton 
+              onClick={() => handleAccess(listItem)}
+            >
               <ListItemIcon>
                 {listItem.icon}
               </ListItemIcon>
@@ -78,10 +115,31 @@ export default function MenuBar() {
         ))}
       </List>
       <Divider />
+      {/* List protected menu items */}
+      {isAuthenticated && (
+        <List>
+          {authRoutes.map((listItem, index) => (
+            <ListItem key={index} disablePadding>
+              <ListItemButton
+                onClick={() => handleAccess(listItem)}
+              >
+                <ListItemIcon>
+                  {listItem.icon}
+                </ListItemIcon>
+                <ListItemText primary={listItem.text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+          <Divider />
+        </List>
+      )}
+      {/* Some bottom routes should not show in Auth Context */}
       <List>
-        {bottomListItems.map((listItem, index) => (
+        {bottomListItems.filter((item) => isAuthenticated ? item.showInAuth : item).map((listItem, index) => (
           <ListItem key={index} disablePadding>
-            <ListItemButton>
+            <ListItemButton 
+              onClick={() => handleAccess(listItem)}
+            >
               <ListItemIcon>
                 {listItem.icon}
               </ListItemIcon>

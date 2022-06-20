@@ -5,12 +5,10 @@ import Dashboard from "../pages/Dashboard/index.js";
 import Login from "../pages/Login";
 // import validateAuth from '../authentication/hooks/validateAuth';
 
-// validate Auth and pass into the route
-// validateAuth();
 export const routes = [
   {
     path: '/',
-    element: <div><a href='/login'>Login Page</a></div>,
+    element: <div>Home Page</div>,
     isPrivate: false
   },
   {
