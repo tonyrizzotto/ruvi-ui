@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthConsumer from '../authentication/useAuth';
-import validateAuth from '../authentication/hooks/validateAuth';
+import AuthConsumer from '../../authentication/useAuth';
+import validateAuth from '../../authentication/hooks/validateAuth';
 
 export default function Dashboard() {
   const { isAuthenticated, user, logout } = AuthConsumer();
@@ -9,6 +9,7 @@ export default function Dashboard() {
 
   // Validate Authentication
   validateAuth();
+
   return (
     <div>
       {isAuthenticated ?
@@ -17,6 +18,13 @@ export default function Dashboard() {
           <button onClick={() => {
             logout().then(() => navigate('/'))
           }}>Logout</button>
+          <button
+            onClick={() => {
+              navigate(`${user.account_uuid}`, {state: user})
+            }}
+          >
+            View Account Details
+          </button>
         </div>
         : 'Unauthorized'
       }
