@@ -20,7 +20,7 @@ root.render(
   <BrowserRouter>
     <ApolloProvider client={client}>
       <AuthProvider>
-        <App isPrivate={true} />
+        <App />
       </AuthProvider>
     </ApolloProvider>
   </BrowserRouter>
