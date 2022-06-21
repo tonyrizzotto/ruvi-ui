@@ -4,6 +4,10 @@ import { useLazyQuery } from '@apollo/client';
 import AuthConsumer from '../authentication/useAuth';
 import { ACCOUNT_LOGIN } from '../constants/queries';
 
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,32 +38,48 @@ export default function Login() {
     })
   }
   return (
-    <div>
+    <Box
+      component={'form'}
+      autoComplete="off"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        p: 1,
+        margin: '20px auto',
+        borderRadius: 3,
+        maxWidth: '550px'
+      }}
+    >
       { !loading ? 
         <>
-          <form onSubmit={handleLogin}>
-            <label>Email: </label>
-            <input 
-              type="text"
-              placeholder='email'
-              autoComplete='current-email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <br />
-            <label>Password: </label>
-            <input 
-              type="password"
-              placeholder='password'
-              autoComplete='current-password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <br />
-            <button 
-              type="submit"
-            >Submit</button>
-          </form>
+          <TextField 
+            type="email"
+            label='email'
+            required
+            autoComplete='current-email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            sx={{ m: 1 }}
+          />
+          <br />
+          <TextField 
+            type="password"
+            label='password'
+            required
+            autoComplete='current-password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            sx={{ m: 1 }}
+          />
+          <br />
+          <Button
+            type="submit"
+            variant='contained'
+            color='primary'
+            onSubmit={handleLogin}
+            sx={{ m: 1, p: 2 }}
+          >Submit</Button>
           <div>
             <p>Don&#39;t have an account? <a href='/accounts/create'>Click here</a> to create one!</p>
           </div>
@@ -69,6 +89,6 @@ export default function Login() {
           <p>redirecting...</p>
         </div>  
       }
-    </div>
+    </Box>
   )
 }

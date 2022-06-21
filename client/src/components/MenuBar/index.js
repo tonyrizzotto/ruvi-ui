@@ -70,7 +70,7 @@ export default function MenuBar() {
     }
   ]
 
-  // use to toggle the drawer open and close
+  // use to toggle the drawer open and closed
   const toggleDrawer = () =>
     (event) => {
       if (
@@ -82,7 +82,7 @@ export default function MenuBar() {
       setOpen(!open)
     };
 
-  // handle login/logout
+  // handle route access
   const handleAccess = ({ text, route }) => {
     if (text !== 'Logout') {
       navigate(route, { state: user })
@@ -161,7 +161,7 @@ export default function MenuBar() {
             </IconButton>
             <Typography sx={{ paddingLeft: '18px' }}>RUVI.dev</Typography>
             <Drawer
-              anchor={'right'}
+              anchor={'left'}
               open={open}
               onClose={toggleDrawer(false)}
             >
