@@ -78,7 +78,7 @@ export default function Login() {
             variant='contained'
             color='primary'
             onSubmit={handleLogin}
-            sx={{ m: 1, p: 2 }}
+            sx={(theme) => ({ m: 1, p: 2, backgroundColor: theme.palette.secondary.main  })}
           >Submit</Button>
           <div>
             <p>Don&#39;t have an account? <a href='/accounts/create'>Click here</a> to create one!</p>

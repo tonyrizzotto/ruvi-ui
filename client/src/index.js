@@ -5,9 +5,11 @@ import {
 } from "react-router-dom"
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
 import { AuthProvider } from './authentication/useAuth'
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import CssBaseline from '@mui/material/CssBaseline'
 import App from './App'
 import MenuBar from './components/MenuBar';
+import { theme } from './config/theme';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4008',
@@ -22,9 +24,11 @@ root.render(
   <BrowserRouter>
     <ApolloProvider client={client}>
       <AuthProvider>
-        <CssBaseline />
-        <MenuBar />
-        <App />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <MenuBar />
+          <App />
+        </ThemeProvider>
       </AuthProvider>
     </ApolloProvider>
   </BrowserRouter>
