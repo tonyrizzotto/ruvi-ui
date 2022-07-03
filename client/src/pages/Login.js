@@ -41,6 +41,7 @@ export default function Login() {
     <Box
       component={'form'}
       autoComplete="off"
+      onSubmit={handleLogin}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -77,7 +78,6 @@ export default function Login() {
             type="submit"
             variant='contained'
             color='primary'
-            onSubmit={handleLogin}
             sx={(theme) => ({ m: 1, p: 2, backgroundColor: theme.palette.secondary.main  })}
           >Submit</Button>
           <div>

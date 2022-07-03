@@ -1,7 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
+
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from "@apollo/client";
-import { CREATE_ACCOUNT } from "../constants/queries";
+import { CREATE_ACCOUNT } from "../../constants/queries";
 
 export default function CreateAccount() {
   const [firstName, setFirstName] = useState('');
@@ -78,73 +83,80 @@ export default function CreateAccount() {
 
   return (
     <>
-      <form onSubmit={handleCreateAccount}>
-        <label>First Name: </label>
-        <input 
-          type="text" 
-          placeholder="first name" 
+      <Box
+        component={'form'}
+        autoComplete='off'
+        onSubmit={handleCreateAccount}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          p: 1,
+          margin: '20px auto',
+          borderRadius: 3,
+          maxWidth: '550px'
+        }}
+      >
+        <TextField 
+          type={'text'}
+          label='First Name'
+          autocomplete='current-first-name'
           value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}  
+          onChange={(e) => setFirstName(e.target.value)}
+          sx={{ m: 1 }}
         />
         <br />
-        <label>Last Name: </label>
-        <input 
-          type="text"
-          placeholder="last name"
+        <TextField 
+          type={'text'}
+          label='Last Name'
+          autocomplete='current-last-name'
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
+          sx={{ m: 1 }}
         />
         <br />
-        <span>
-          <label>Email: </label>
-          <input 
-            type="text" 
-            ref={emailRef}
-            placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <i> {isUpdatingEmail && emailErrorMessage}</i>
-        </span>
-        <br />
-        <span>
-          <label>Username: </label>
-          <input 
-            ref={usernameRef}
-            type="text"
-            placeholder="username"
-            autoComplete="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <i> {isUpdatedingUsername && usernameErrorMessage}</i>
-        </span>
+        <TextField 
+          type={'text'}
+          label='Email'
+          autocomplete='current-email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          sx={{ m: 1 }}
+        />
+        <i> {isUpdatingEmail && emailErrorMessage}</i>
 
         <br />
-        <label>Password: </label>
-        <input 
-          type="password" 
-          placeholder="password"
-          autoComplete="current-password" 
+        <TextField 
+          type={'text'}
+          label='Username'
+          autocomplete='current-username'
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          sx={{ m: 1 }}
+        />
+        <i> {isUpdatedingUsername && usernameErrorMessage}</i>
+
+        <br />
+        <TextField 
+          type={'password'}
+          label='Password'
+          autocomplete='current-password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          sx={{ m: 1 }}
         />
-        <br />
-        <button 
-          type="submit"
-          onSubmit={() => {
-            setEmailErrorMessage('')
-            setUsernameErrorMessage('')
-            setIsUpdatingEmail(false)
-            setIsUpdatingUsername(false)
-          }}
+        <Button
+          type='submit'
+          variant='contained'
+          color='primary'
+          sx={(theme) => ({ m: 1, p: 2, backgroundColor: theme.palette.secondary.main  })}
         >
-          Create an account
-        </button>
-      </form>
-      <div>
-        <p>Return <a href="/">back home</a></p>
-      </div>
+          Submit
+        </Button>
+        <div>
+          <p>Return <a href="/">back home</a></p>
+        </div>
+      </Box>
     </>
   )
 }

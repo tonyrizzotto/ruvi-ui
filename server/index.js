@@ -1,15 +1,12 @@
-const { ApolloServer } = require('apollo-server');
-const resolvers = require('./resolvers')
-const typeDefs = require('./typeDefs')
+const createServer = require('./server');
 
+let server;
+const start = async () => {
+  server = await createServer();
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  csrfPrevention: true
-})
+  server.listen({ port: 4008 }).then(({ url }) => {
+    console.log(`Server is listening at ${url}`)
+  });
+}
 
-server.listen({ port: 4008 }).then(({ url }) => {
-  console.log(`Server is listening at ${url}`)
-});
-
+start();
