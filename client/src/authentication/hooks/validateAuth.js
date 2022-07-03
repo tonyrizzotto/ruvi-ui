@@ -46,7 +46,7 @@ export function isAuthTokenValid() {
 /**
  * @description validates authentication on page refresh.
  */
-export default function validateAuth() {
+export default function useValidateAuth() {
 
   const { login } = AuthConsumer();
 

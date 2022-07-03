@@ -1,12 +1,12 @@
 import React from 'react';
 import AuthConsumer from '../../authentication/useAuth';
-import validateAuth from '../../authentication/hooks/validateAuth';
+import useValidateAuth from '../../authentication/hooks/validateAuth';
 
 export default function Dashboard() {
   const { isAuthenticated, user } = AuthConsumer();
 
   // Validate Authentication
-  validateAuth();
+  useValidateAuth();
 
   return (
     <div>

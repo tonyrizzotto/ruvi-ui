@@ -22,6 +22,7 @@
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"react-scripts start\"",
+    "start:dev": "react-scripts start",
     "server": "cd .. / && npm run dev --prefix server",
     "build": "react-scripts build",
     "test": "react-scripts test",
