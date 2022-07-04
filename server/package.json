@@ -4,6 +4,7 @@
   "description": "The ruvi graphql server",
   "main": "index.js",
   "scripts": {
+    "start": "npm install",
     "dev": "nodemon index.js",
     "test": "jest"
   },
