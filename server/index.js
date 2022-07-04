@@ -1,4 +1,4 @@
-const createServer = require('./server');
+const createServer = require('./server.js');
 
 let server;
 const start = async () => {
